@@ -12,14 +12,32 @@ import {loginActions} from './actions';
   loginActions
 )
 class Login extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      message: ""
+    }
+  }
+  validateUser = (userName, password) => {
+    if (userName && password)
+     return true;
+  }
+
   navigateToDashboard = () => {
-    this.props.history.push('/dashboard');
+    const {userName, password} = this.props;
+    const validation = this.validateUser(userName, password);
+    if (validation) {
+      this.props.history.push('/charthome');
+    } else {
+      this.setState({message: "Please enter user name and password"});
+    }    
   }
 
   render() {
     const {
       userName, password, updateUserName, updatePassword
     } = this.props;
+    const {message} = this.state;
 
     return (
       <div className="container">
@@ -44,6 +62,7 @@ class Login extends PureComponent {
           size="sm"
         />
         <button type="submit" onClick={this.navigateToDashboard}>Login</button>
+        <span className="error">{message}</span>
       </div>
     );
   }

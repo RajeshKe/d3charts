@@ -16,9 +16,13 @@ module.exports = {
         use: ['style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
       },
       {
+        test: /\.css$/,
+        use: ['style-loader', MiniCssExtractPlugin.loader, 'css-loader']
+      },
+      {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: ['babel-loader', 'eslint-loader']
+        use: ['babel-loader']
       }
     ]
   },
@@ -51,7 +55,8 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       title: 'React Sample',
-      template: './src/index.html'
+      template: './src/index.html',
+      inject: true
     })
   ],
   devServer: {
